@@ -16,7 +16,7 @@ Built on PDF.js and the Web Audio API — no build tools required.
 ## Features
 
 - Realistic 3D page-turn animation with CSS perspective
-- PDF rendering via [PDF.js](https://mozilla.github.io/pdf.js/) — up to ~200 pages
+- PDF rendering via [PDF.js](https://mozilla.github.io/pdf.js/)
 - Image gallery support (`loadImages`)
 - Page flip sound effect (synthesised via Web Audio API)
 - Mute / unmute button
