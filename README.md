@@ -5,7 +5,7 @@
 
 A lightweight, zero-dependency JavaScript plugin that renders PDFs (or image arrays) as a realistic 3D flip book in the browser. Built on the Web Audio API and PDF.js — no build tools required.
 
-## Demo: 
+## Demo
 
 [Live Demo](https://flipbook3d.vercel.app/)
 
