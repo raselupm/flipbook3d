@@ -119,10 +119,10 @@ final class FlipBook3D_Elementor_Plugin {
 	/* ------------------------------------------------------------------ */
 
 	public function register_assets() {
-		// PDF.js (required for PDF rendering)
+		// PDF.js (required for PDF rendering) — bundled locally
 		wp_register_script(
 			'flipbook3d-pdfjs',
-			'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',
+			FLIPBOOK3D_ASSETS_URL . 'js/pdf.min.js',
 			[],
 			'3.11.174',
 			true
@@ -143,6 +143,13 @@ final class FlipBook3D_Elementor_Plugin {
 			[ 'flipbook3d-pdfjs' ],
 			FLIPBOOK3D_VERSION,
 			true
+		);
+
+		// Pass the local worker URL to the script
+		wp_localize_script(
+			'flipbook3d-core',
+			'flipbook3dData',
+			[ 'workerSrc' => FLIPBOOK3D_ASSETS_URL . 'js/pdf.worker.min.js' ]
 		);
 
 		// Elementor frontend handler

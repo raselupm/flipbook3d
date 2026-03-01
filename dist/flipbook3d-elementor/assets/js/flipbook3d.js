@@ -241,7 +241,9 @@ class FlipBook3D {
         this._showLoading(true, 'Loading PDF…');
         try {
             pdfjsLib.GlobalWorkerOptions.workerSrc =
-                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                ( window.flipbook3dData && window.flipbook3dData.workerSrc )
+                    ? window.flipbook3dData.workerSrc
+                    : '';
 
             const loadingTask = typeof source === 'string'
                 ? pdfjsLib.getDocument(source)
