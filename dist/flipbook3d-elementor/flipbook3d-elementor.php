@@ -7,9 +7,9 @@
  * Requires at least: 5.9
  * Requires PHP:      7.4
  * Author:            FlipBook3D
- * Author URI:        https://github.com/raselupm/flipbook3d
+ * Author URI:        https://github.com/raselupm
  * License:           MIT
- * Text Domain:       flipbook3d-elementor
+ * Text Domain:       flipbook3d-elementor-widget
  *
  * Elementor tested up to: 3.20
  */
@@ -74,7 +74,7 @@ final class FlipBook3D_Elementor_Plugin {
 	public function notice_missing_elementor() {
 		$msg = sprintf(
 			/* translators: 1: Plugin name, 2: Elementor */
-			esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'flipbook3d-elementor' ),
+			esc_html__( '"%1$s" requires "%2$s" to be installed and activated.', 'flipbook3d-elementor-widget' ),
 			'<strong>FlipBook3D Elementor</strong>',
 			'<strong>Elementor</strong>'
 		);
@@ -84,7 +84,7 @@ final class FlipBook3D_Elementor_Plugin {
 	public function notice_elementor_version() {
 		$msg = sprintf(
 			/* translators: 1: Plugin name, 2: Elementor, 3: Required version */
-			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'flipbook3d-elementor' ),
+			esc_html__( '"%1$s" requires "%2$s" version %3$s or greater.', 'flipbook3d-elementor-widget' ),
 			'<strong>FlipBook3D Elementor</strong>',
 			'<strong>Elementor</strong>',
 			FLIPBOOK3D_MIN_ELEMENTOR
@@ -98,7 +98,7 @@ final class FlipBook3D_Elementor_Plugin {
 
 	public function register_category( $manager ) {
 		$manager->add_category( 'flipbook3d', [
-			'title' => esc_html__( 'FlipBook3D', 'flipbook3d-elementor' ),
+			'title' => esc_html__( 'FlipBook3D', 'flipbook3d-elementor-widget' ),
 			'icon'  => 'eicon-book',
 		] );
 	}
