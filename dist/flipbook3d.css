@@ -236,6 +236,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    line-height: 1;
 }
 
 #fb-fs svg {
