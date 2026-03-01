@@ -1,0 +1,337 @@
+/* ============================================
+   FlipBook3D — Plugin Styles
+   https://github.com/raselupm/flipbook3d
+============================================ */
+
+:root {
+    --fb-shadow-color: rgba(0,0,0,0.5);
+    --fb-page-bg: #fff;
+    --fb-spine-color: #c8a96e;
+    --fb-cover-bg: #1a1a2e;
+    --fb-accent: #e8c87d;
+    --fb-ui-bg: rgba(10,10,20,0.85);
+    --fb-ui-text: #f0e8d8;
+}
+
+.flipbook3d-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    font-family: 'Georgia', serif;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.flipbook3d-stage {
+    position: relative;
+    perspective: 2200px;
+    perspective-origin: 50% 50%;
+}
+
+.flipbook3d-book {
+    position: relative;
+    transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+}
+
+/* Book shadow on surface */
+.flipbook3d-book::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 5%;
+    width: 90%;
+    height: 40px;
+    background: radial-gradient(ellipse, rgba(0,0,0,0.4) 0%, transparent 70%);
+    transform: rotateX(90deg) translateZ(-20px);
+    pointer-events: none;
+}
+
+/* Pages container — two halves side by side */
+.flipbook3d-spread {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+/* Spine between pages */
+.flipbook3d-spine {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(90deg, #8b6914, var(--fb-spine-color), #f5dfa0, var(--fb-spine-color), #8b6914);
+    z-index: 10;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    border-radius: 1px;
+}
+
+/* Left & right static pages */
+.flipbook3d-page-left,
+.flipbook3d-page-right {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    background: var(--fb-page-bg);
+}
+
+.flipbook3d-page-left {
+    border-radius: 4px 0 0 4px;
+    box-shadow: inset -8px 0 20px rgba(0,0,0,0.08), -6px 0 20px rgba(0,0,0,0.3);
+}
+
+.flipbook3d-page-right {
+    border-radius: 0 4px 4px 0;
+    box-shadow: inset 8px 0 20px rgba(0,0,0,0.08), 6px 0 20px rgba(0,0,0,0.3);
+}
+
+.flipbook3d-page-left canvas,
+.flipbook3d-page-right canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+    display: block;
+}
+
+/* Page curl / flip element */
+.flipbook3d-flipper {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    z-index: 5;
+    pointer-events: none;
+}
+
+.flipbook3d-flipper.from-right {
+    right: 0;
+    transform-origin: left center;
+}
+
+.flipbook3d-flipper.from-left {
+    left: 0;
+    transform-origin: right center;
+}
+
+.flipbook3d-flipper-front,
+.flipbook3d-flipper-back {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+    background: var(--fb-page-bg);
+}
+
+.flipbook3d-flipper-front {
+    border-radius: 0 4px 4px 0;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+}
+
+.flipbook3d-flipper-back {
+    transform: rotateY(180deg);
+    border-radius: 4px 0 0 4px;
+}
+
+.flipbook3d-flipper-front canvas,
+.flipbook3d-flipper-back canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+/* Page number overlay */
+.flipbook3d-page-num {
+    position: absolute;
+    bottom: 12px;
+    font-size: 11px;
+    color: #999;
+    letter-spacing: 0.08em;
+    font-family: 'Georgia', serif;
+    pointer-events: none;
+}
+.flipbook3d-page-left .flipbook3d-page-num { left: 16px; }
+.flipbook3d-page-right .flipbook3d-page-num { right: 16px; }
+
+/* Page curl gradient for realism */
+.page-curl-shadow {
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.12));
+    pointer-events: none;
+    z-index: 1;
+}
+.flipbook3d-page-left .page-curl-shadow {
+    left: 0; right: auto;
+    background: linear-gradient(90deg, rgba(0,0,0,0.08), transparent);
+}
+
+/* Loading overlay */
+.flipbook3d-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f0e8;
+    border-radius: 4px;
+    z-index: 20;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.flipbook3d-loading-spinner {
+    width: 40px; height: 40px;
+    border: 3px solid #d4b87a;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: fb-spin 0.8s linear infinite;
+}
+
+.flipbook3d-loading-text {
+    font-size: 13px;
+    color: #8b6914;
+    letter-spacing: 0.1em;
+}
+
+@keyframes fb-spin { to { transform: rotate(360deg); } }
+
+/* Controls */
+.flipbook3d-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--fb-ui-bg);
+    backdrop-filter: blur(12px);
+    padding: 10px 20px;
+    border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.flipbook3d-btn {
+    background: none;
+    border: 1.5px solid rgba(232, 200, 125, 0.4);
+    color: var(--fb-accent);
+    padding: 8px 18px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    font-family: 'Georgia', serif;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.flipbook3d-btn:hover:not(:disabled) {
+    background: rgba(232, 200, 125, 0.15);
+    border-color: var(--fb-accent);
+    box-shadow: 0 0 12px rgba(232, 200, 125, 0.2);
+}
+
+.flipbook3d-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.flipbook3d-page-info {
+    color: var(--fb-ui-text);
+    font-size: 13px;
+    min-width: 90px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+
+.flipbook3d-fullscreen-btn {
+    background: none;
+    border: none;
+    color: var(--fb-accent);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 18px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.flipbook3d-fullscreen-btn:hover { opacity: 1; }
+
+.flipbook3d-wrapper:fullscreen,
+.flipbook3d-wrapper:-webkit-full-screen,
+.flipbook3d-wrapper:-moz-full-screen {
+    background: #0a0a14;
+    width: 100vw;
+    height: 100vh;
+    /* Use dvh so mobile browser chrome is excluded */
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    /* Prevent the OS from clipping the stage on small screens */
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+
+/* Click zones */
+.flipbook3d-click-left,
+.flipbook3d-click-right {
+    position: absolute;
+    top: 0;
+    width: 35%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 15;
+    transition: background 0.2s;
+}
+.flipbook3d-click-left { left: 0; border-radius: 4px 0 0 4px; }
+.flipbook3d-click-right { right: 0; border-radius: 0 4px 4px 0; }
+.flipbook3d-click-left:hover { background: linear-gradient(90deg, rgba(232,200,125,0.06), transparent); }
+.flipbook3d-click-right:hover { background: linear-gradient(270deg, rgba(232,200,125,0.06), transparent); }
+
+/* Arrow hints */
+.flipbook3d-click-left::after,
+.flipbook3d-click-right::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-style: solid;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.flipbook3d-click-left::after {
+    left: 16px;
+    border-width: 10px 14px 10px 0;
+    border-color: transparent rgba(232,200,125,0.5) transparent transparent;
+}
+.flipbook3d-click-right::after {
+    right: 16px;
+    border-width: 10px 0 10px 14px;
+    border-color: transparent transparent transparent rgba(232,200,125,0.5);
+}
+.flipbook3d-click-left:hover::after,
+.flipbook3d-click-right:hover::after { opacity: 1; }
+
+/* Ambient 3D tilt on hover */
+.flipbook3d-stage:hover .flipbook3d-book {
+    transform: rotateY(-2deg) rotateX(1deg);
+    transition: transform 0.4s ease;
+}
