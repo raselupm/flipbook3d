@@ -238,6 +238,10 @@
     gap: 6px;
 }
 
+#fb-fs svg {
+    float: left;
+}
+
 .flipbook3d-btn:hover:not(:disabled) {
     background: rgba(232, 200, 125, 0.15);
     border-color: var(--fb-accent);
