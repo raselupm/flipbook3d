@@ -124,6 +124,12 @@
 		/* ---- Responsive: re-size book when container changes ---- */
 		var origWidth = bookWidth;
 		$( window ).on( 'resize.fb3d-' + id, function () {
+			// Chrome fires a window resize event when entering/exiting fullscreen.
+			// Skip here so the fullscreen size calculation in onFsChange is not
+			// immediately overwritten back to the original container width.
+			var isFs = !!( document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement );
+			if ( isFs || fb._fsChanging ) return;
+
 			var cw = $( el ).parent().width();
 			if ( ! cw || cw <= 0 ) return;
 			var nw = Math.min( origWidth, cw );

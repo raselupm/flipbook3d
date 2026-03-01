@@ -149,16 +149,16 @@ class FlipBook3D {
         this.controls = document.createElement('div');
         this.controls.className = 'flipbook3d-controls';
         this.controls.innerHTML = `
-      <button class="flipbook3d-btn" id="fb-first" title="First page">⏮ First</button>
-      <button class="flipbook3d-btn" id="fb-prev" title="Previous page">← Prev</button>
+      <span class="flipbook3d-btn" id="fb-first" title="First page">⏮ First</span>
+      <span class="flipbook3d-btn" id="fb-prev" title="Previous page">← Prev</span>
       <span class="flipbook3d-page-info" id="fb-page-info">— / —</span>
-      <button class="flipbook3d-btn" id="fb-next" title="Next page">Next →</button>
-      <button class="flipbook3d-btn" id="fb-last" title="Last page">Last ⏭</button>
-      <button class="flipbook3d-fullscreen-btn" id="fb-fs" title="Fullscreen">
+      <span class="flipbook3d-btn" id="fb-next" title="Next page">Next →</span>
+      <span class="flipbook3d-btn" id="fb-last" title="Last page">Last ⏭</span>
+      <span class="flipbook3d-fullscreen-btn" id="fb-fs" title="Fullscreen">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
         </svg>
-      </button>
+      </span>
     `;
 
         this.stage.appendChild(this.book);
@@ -210,24 +210,19 @@ class FlipBook3D {
             this._fsChanging = true;
             const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
             if (isFs) {
-                // Defer until the browser finishes the fullscreen transition so the
-                // fullscreen element's clientWidth/clientHeight equal the real screen
-                // size. window.screen.* is unreliable across OS / DPI configurations.
-                setTimeout(() => {
-                    const fsEl = document.fullscreenElement
-                        || document.webkitFullscreenElement
-                        || document.mozFullScreenElement;
-                    const availW = fsEl ? fsEl.clientWidth  : window.innerWidth;
-                    const totalH = fsEl ? fsEl.clientHeight : window.innerHeight;
-                    const controlsH = this.controls.offsetHeight + 16; // 16 px flex gap
-                    const availH = totalH - controlsH;
-                    const fitByH = Math.round(availH * 2 / this.opts.aspectRatio);
-                    this._resize(Math.min(availW, fitByH));
-                }, 120);
+                // window.screen.width/height are the physical screen dimensions —
+                // always available immediately, no timing dependency. This is the
+                // only reliable approach on Safari which does not fire a window
+                // resize event when an element enters fullscreen.
+                const controlsH = this.controls.offsetHeight + 40;
+                const availH = window.screen.height - controlsH;
+                const availW = window.screen.width;
+                const fitByH = Math.round(availH * 2 / this.opts.aspectRatio);
+                this._resize(Math.min(availW, fitByH));
             } else {
                 this._resize(this._origWidth);
             }
-            setTimeout(() => { this._fsChanging = false; }, 500);
+            setTimeout(() => { this._fsChanging = false; }, 300);
         };
         document.addEventListener('fullscreenchange', onFsChange);
         document.addEventListener('webkitfullscreenchange', onFsChange);
@@ -479,10 +474,10 @@ class FlipBook3D {
             this.pageInfo.textContent = `${leftIdx + 1}\u2013${display} / ${this.totalPages}`;
         }
         const lastSpread = Math.max(0, this.totalPages % 2 === 0 ? this.totalPages - 2 : this.totalPages - 1);
-        if (this.btnFirst) this.btnFirst.disabled = this.currentSpread === 0;
-        if (this.btnPrev)  this.btnPrev.disabled  = this.currentSpread === 0;
-        if (this.btnNext)  this.btnNext.disabled  = this.currentSpread >= lastSpread;
-        if (this.btnLast)  this.btnLast.disabled  = this.currentSpread >= lastSpread;
+        if (this.btnFirst) this.btnFirst.classList.toggle('disabled', this.currentSpread === 0);
+        if (this.btnPrev)  this.btnPrev.classList.toggle('disabled',  this.currentSpread === 0);
+        if (this.btnNext)  this.btnNext.classList.toggle('disabled',  this.currentSpread >= lastSpread);
+        if (this.btnLast)  this.btnLast.classList.toggle('disabled',  this.currentSpread >= lastSpread);
         this.clickLeft.style.cursor  = this.currentSpread === 0 ? 'default' : 'pointer';
         this.clickRight.style.cursor = this.currentSpread >= lastSpread ? 'default' : 'pointer';
     }

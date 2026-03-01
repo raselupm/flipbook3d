@@ -236,15 +236,20 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    line-height: 1;
 }
 
-.flipbook3d-btn:hover:not(:disabled) {
+span#fb-fs svg {
+    float: left;
+}
+
+.flipbook3d-btn:hover:not(.disabled) {
     background: rgba(232, 200, 125, 0.15);
     border-color: var(--fb-accent);
     box-shadow: 0 0 12px rgba(232, 200, 125, 0.2);
 }
 
-.flipbook3d-btn:disabled {
+.flipbook3d-btn.disabled {
     opacity: 0.3;
     cursor: not-allowed;
 }
