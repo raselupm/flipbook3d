@@ -37,19 +37,6 @@
     height: 100%;
 }
 
-/* Book shadow on surface */
-.flipbook3d-book::after {
-    content: '';
-    position: absolute;
-    bottom: -30px;
-    left: 5%;
-    width: 90%;
-    height: 40px;
-    background: radial-gradient(ellipse, rgba(0,0,0,0.4) 0%, transparent 70%);
-    transform: rotateX(90deg) translateZ(-20px);
-    pointer-events: none;
-}
-
 /* Pages container — two halves side by side */
 .flipbook3d-spread {
     position: relative;
