@@ -5,6 +5,8 @@
 
 A lightweight, zero-dependency JavaScript plugin that renders PDFs (or image arrays) as a realistic 3D flip book in the browser. Built on the Web Audio API and PDF.js — no build tools required.
 
+##Demo: [Live Demo](https://flipbook3d.vercel.app/)
+
 ## Features
 
 - Realistic 3D page-turn animation with CSS perspective
@@ -137,10 +139,6 @@ npx serve .
 ```
 
 Then open `http://localhost:8080` and upload any PDF.
-
-## Deploying to Vercel
-
-Push the repo to GitHub, then import it in [vercel.com](https://vercel.com). No configuration needed — Vercel detects the static site and serves `index.html` automatically.
 
 ## License
 
